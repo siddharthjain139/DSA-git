@@ -1,29 +1,13 @@
-#include <iostream>
-#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;
 
-// Helper function to count the number of digits in the number
-int countDigits(int n) {
-    if (n == 0) return 0;
-    return 1 + countDigits(n / 10);
-}
 
-// Recursive function to check if the number is a palindrome
-bool isPalindrome(int n, int temp) {
+bool isPalindrome(int n, int rev, int original) {
     if (n == 0)
-        return true;
-
-    int lastDigit = n % 10;
-    int firstDigit = temp / pow(10, countDigits(n) - 1);
-
-    if (lastDigit != firstDigit)
-        return false;
-
-    // Remove first and last digits
-    temp = temp - firstDigit * pow(10, countDigits(n) - 1);
-    n = n / 10;
-
-    return isPalindrome(n, temp);
+        return (rev == original);
+    
+    rev = rev * 10 + (n % 10);
+    return isPalindrome(n / 10, rev, original);
 }
 
 int main() {
@@ -31,7 +15,7 @@ int main() {
     cout << "Enter a natural number: ";
     cin >> N;
 
-    if (isPalindrome(N, N))
+    if (isPalindrome(N, 0, N))
         cout << "true" << endl;
     else
         cout << "false" << endl;
